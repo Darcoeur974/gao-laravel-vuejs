@@ -25,6 +25,12 @@ class ComputerSeeder extends Seeder
             [
                 'name' => 'Ordinateur-3',
             ],
+            [
+                'name' => 'Ordinateur-4',
+            ],
+            [
+                'name' => 'Ordinateur-5',
+            ],
         ]);
     }
 }

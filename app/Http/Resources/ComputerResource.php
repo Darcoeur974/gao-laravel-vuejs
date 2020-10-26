@@ -16,7 +16,7 @@ class ComputerResource extends JsonResource
     {
         return [
             'id'=>$this->id,
-            'titre'=>$this->name,
+            'name'=>$this->name,
         ];
     }
 }

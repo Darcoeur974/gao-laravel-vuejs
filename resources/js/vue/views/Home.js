@@ -1,6 +1,10 @@
 import Axios from "axios";
+import Computer from "./Components/Computers.vue";
 
 export default {
+    components: {
+        Computer,
+    },
     data() {
         return {
             computers: [],
@@ -13,8 +17,9 @@ export default {
         getComputers() {
             Axios.get('/api/computers').then(
                 ({ data }) => {
-                    console.log(data)
-                    // this.computers.push(data)
+                    data.data.forEach(_data => {
+                        this.computers.push(_data)
+                    })
                 }
             )
         },
