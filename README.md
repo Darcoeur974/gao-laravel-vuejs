@@ -10,3 +10,8 @@
 ## gao-laravel-vuejs
 
 - composer install
+- npm install
+- copy & rename '.env.example' en '.env'
+
+Lancement du serveur
+- php artisan serve
