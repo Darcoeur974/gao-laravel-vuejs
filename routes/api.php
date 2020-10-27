@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ComputerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-
-Route::get('/computers', 'ComputerController@getComputers');
-
+Route::prefix('/computer')->group(function () {
+    Route::post('/create', [ComputerController::class, 'create'])->middleware('throttle:240,1');
+    Route::get('/', [ComputerController::class, 'getAll']);
+});
