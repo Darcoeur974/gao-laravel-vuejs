@@ -20,6 +20,7 @@ class AssignResource extends JsonResource
             'id_client'=>$this->client,
             'id_computer'=>$this->computer,
             'schedule'=>$this->schedule,
+            'date'=>$this->date,
         ];
     }
 }

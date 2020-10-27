@@ -12,6 +12,7 @@ class AssignModel extends Model
         'id_client',
         'id_computer',
         'schedule',
+        'date',
     ];
     public $timestamps = false;
 

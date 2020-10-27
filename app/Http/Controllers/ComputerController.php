@@ -18,8 +18,6 @@ class ComputerController extends Controller
 
     public function create(Request $request)
     {
-        Log::debug($request);
-
         $validatedData = $request->validate([
             'name' => 'required|string',
         ]);
@@ -29,8 +27,6 @@ class ComputerController extends Controller
         $addComputer->name = $validatedData['name'];
 
         $addComputer->save();
-
-        Log::debug($addComputer);
 
         return new ComputerResource($addComputer);
     }

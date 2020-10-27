@@ -1908,12 +1908,70 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     computer: {
       "default": function _default() {
         return {};
       }
+    }
+  },
+  data: function data() {
+    return {
+      assigns: [],
+      schedules: [{
+        schedule: 8
+      }, {
+        schedule: 9
+      }, {
+        schedule: 10
+      }, {
+        schedule: 11
+      }, {
+        schedule: 12
+      }, {
+        schedule: 13
+      }, {
+        schedule: 14
+      }, {
+        schedule: 15
+      }, {
+        schedule: 16
+      }, {
+        schedule: 17
+      }, {
+        schedule: 18
+      }]
+    };
+  },
+  created: function created() {
+    this.initialize();
+    this.displaySchedule();
+  },
+  methods: {
+    initialize: function initialize() {
+      var _this = this;
+
+      this.computer.client.forEach(function (_data) {
+        _this.assigns.push({
+          schedule: _data.pivot.schedule,
+          firstname: _data.firstname
+        });
+      });
+    },
+    displaySchedule: function displaySchedule() {
+      var _this2 = this;
+
+      this.assigns.forEach(function (_assign) {
+        for (var i = 0; i < _this2.schedules.length; i++) {
+          if (_this2.schedules[i].schedule === _assign.schedule) {
+            _this2.schedules[i] = _assign;
+          }
+        }
+      });
     }
   }
 });
@@ -20277,7 +20335,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("v-main", [_c("v-app", [_c("router-view")], 1)], 1)
+  return _c("v-app", [_c("router-view")], 1)
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -20304,6 +20362,7 @@ var render = function() {
   return _c(
     "v-dialog",
     {
+      attrs: { width: "450px" },
       scopedSlots: _vm._u([
         {
           key: "activator",
@@ -20315,7 +20374,10 @@ var render = function() {
                 "v-btn",
                 _vm._g(
                   _vm._b(
-                    { attrs: { icon: "", color: "orange" } },
+                    {
+                      staticClass: "ml-5",
+                      attrs: { icon: "", color: "orange" }
+                    },
                     "v-btn",
                     attrs,
                     false
@@ -20378,7 +20440,7 @@ var render = function() {
                     }
                   }),
                   _vm._v(" "),
-                  _vm.name.length > 1
+                  _vm.name.length >= 10 && _vm.name.length <= 20
                     ? _c(
                         "v-btn",
                         { attrs: { icon: "", color: "orange" } },
@@ -20432,7 +20494,67 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "v-card",
-    [_c("v-card-title", [_vm._v(_vm._s(_vm.computer.name))])],
+    { staticClass: "ma-2 justify-center", attrs: { width: "400px" } },
+    [
+      _c("v-card-title", [_vm._v(_vm._s(_vm.computer.name))]),
+      _vm._v(" "),
+      _c(
+        "v-card-text",
+        [
+          _c(
+            "v-row",
+            [
+              _c("v-col", { attrs: { cols: "2" } }, [
+                _vm._v("\n                Heure\n            ")
+              ]),
+              _vm._v(" "),
+              _c(
+                "v-col",
+                { staticClass: "text-center", attrs: { cols: "8" } },
+                [_vm._v("\n                Nom Prènom\n            ")]
+              ),
+              _vm._v(" "),
+              _c("v-col", { staticClass: "text-right", attrs: { cols: "2" } }, [
+                _vm._v("\n                Action\n            ")
+              ])
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _vm._l(_vm.schedules, function(schedule, key) {
+            return _c(
+              "v-row",
+              { key: key },
+              [
+                _c("v-col", { attrs: { cols: "2" } }, [
+                  _vm._v(
+                    "\n                " +
+                      _vm._s(schedule.schedule) +
+                      " h\n            "
+                  )
+                ]),
+                _vm._v(" "),
+                _c(
+                  "v-col",
+                  { staticClass: "text-center", attrs: { cols: "8" } },
+                  [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(schedule.firstname) +
+                        "\n            "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c("v-col", { staticClass: "text-right", attrs: { cols: "2" } })
+              ],
+              1
+            )
+          })
+        ],
+        2
+      )
+    ],
     1
   )
 }
@@ -20461,24 +20583,38 @@ var render = function() {
   return _c(
     "v-main",
     [
-      _c("AddComputer", {
-        on: {
-          addComputer: function($event) {
-            return _vm.add($event)
-          }
-        }
-      }),
+      _c(
+        "v-row",
+        { staticClass: "ma-2 pa-2 align-end" },
+        [
+          _c("h2", [_vm._v("Liste des ordinateurs")]),
+          _vm._v(" "),
+          _c("AddComputer", {
+            on: {
+              addComputer: function($event) {
+                return _vm.add($event)
+              }
+            }
+          })
+        ],
+        1
+      ),
       _vm._v(" "),
-      _vm._l(_vm.computers, function(computer, key) {
-        return _c(
-          "div",
-          { key: key },
-          [_c("Computer", { attrs: { computer: computer } })],
-          1
-        )
-      })
+      _c(
+        "v-row",
+        { staticClass: "justify-center" },
+        _vm._l(_vm.computers, function(computer, key) {
+          return _c(
+            "div",
+            { key: key },
+            [_c("Computer", { attrs: { computer: computer } })],
+            1
+          )
+        }),
+        0
+      )
     ],
-    2
+    1
   )
 }
 var staticRenderFns = []

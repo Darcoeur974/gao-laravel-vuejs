@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AssignsTable extends Migration
+class UpdateAssignsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,8 @@ class AssignsTable extends Migration
      */
     public function up()
     {
-        Schema::create('assigns', function (Blueprint $table) {
-            $table->id();
-            $table->string('id_client');
-            $table->string('id_computer');
-            $table->integer('schedule');
+        Schema::table('assigns', function (Blueprint $table) {
+            $table->date('date');
         });
     }
 
@@ -28,6 +25,8 @@ class AssignsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('assigns');
+        Schema::table('assigns', function (Blueprint $table) {
+            $table->dropColumn('date');
+        });
     }
 }

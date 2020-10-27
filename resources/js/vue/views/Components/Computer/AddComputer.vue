@@ -1,7 +1,7 @@
 <template>
-    <v-dialog v-model="dialog">
+    <v-dialog v-model="dialog" width="450px">
         <template v-slot:activator="{ on, attrs }">
-            <v-btn icon color="orange" v-bind="attrs" v-on="on">
+            <v-btn icon color="orange" v-bind="attrs" v-on="on" class="ml-5">
                 <v-icon>mdi-card-plus</v-icon>
             </v-btn>
         </template>
@@ -15,7 +15,7 @@
                 <v-row class="align-center">
                     <v-text-field v-model="name" :rules="nameRules" label="Nom de l'ordinateur"></v-text-field>
 
-                    <v-btn icon color="orange" v-if="name.length > 1">
+                    <v-btn icon color="orange" v-if="name.length >= 10 && name.length <= 20">
                         <v-icon @click="save">mdi-check</v-icon>
                     </v-btn>
 
