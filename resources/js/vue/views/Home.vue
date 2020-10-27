@@ -1,6 +1,6 @@
 <template>
     <v-main>
-        <p>TOTO est là</p>
+        <AddComputer />
         <div v-for="(computer, key) in computers" :key="key">
             <Computer :computer="computer" />
         </div>

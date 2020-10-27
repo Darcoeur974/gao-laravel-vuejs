@@ -1,9 +1,11 @@
 import Axios from "axios";
 import Computer from "./Components/Computers.vue";
+import AddComputer from "./Components/Computer/AddComputer.vue";
 
 export default {
     components: {
         Computer,
+        AddComputer,
     },
     data() {
         return {
@@ -15,7 +17,7 @@ export default {
     },
     methods: {
         getComputers() {
-            Axios.get('/api/computers').then(
+            Axios.get('/api/computer').then(
                 ({ data }) => {
                     data.data.forEach(_data => {
                         this.computers.push(_data)
