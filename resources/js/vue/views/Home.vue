@@ -1,6 +1,6 @@
 <template>
     <v-main>
-        <AddComputer />
+        <AddComputer @addComputer="add($event) " />
         <div v-for="(computer, key) in computers" :key="key">
             <Computer :computer="computer" />
         </div>

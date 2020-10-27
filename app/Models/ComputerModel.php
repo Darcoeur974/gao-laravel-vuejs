@@ -11,4 +11,14 @@ class ComputerModel extends Model
         'name',
     ];
     public $timestamps = false;
+
+    public function client()
+    {
+        return $this->belongsToMany(
+            ClientModel::class,
+            'assigns',
+            'id_client',
+            'id_computer'
+        )->withPivot('schedule');
+    }
 }

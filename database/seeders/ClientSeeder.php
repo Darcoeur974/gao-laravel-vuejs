@@ -36,6 +36,5 @@ class ClientSeeder extends Seeder
                 'firstname' => 'Nyx',
             ],
         ]);
-
     }
 }

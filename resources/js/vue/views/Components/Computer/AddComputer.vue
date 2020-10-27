@@ -13,13 +13,16 @@
             </v-card-title>
             <v-card-text>
                 <v-row class="align-center">
-                    <v-text-field v-model="name" label="Nom de l'ordinateur"></v-text-field>
+                    <v-text-field v-model="name" :rules="nameRules" label="Nom de l'ordinateur"></v-text-field>
+
                     <v-btn icon color="orange" v-if="name.length > 1">
                         <v-icon @click="save">mdi-check</v-icon>
                     </v-btn>
+
                     <v-btn icon color="orange" v-else disabled>
                         <v-icon>mdi-check</v-icon>
                     </v-btn>
+
                 </v-row>
             </v-card-text>
         </v-card>

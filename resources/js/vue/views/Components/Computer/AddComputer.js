@@ -5,7 +5,10 @@ export default {
         return {
             dialog: false,
             name: '',
-            nameRules: [v => !!v || "Nom d'ordinateur requis"],
+            nameRules: [
+                v => !!v || "Nom d'ordinateur requis",
+                v => (v && v.length >= 10 && v.length <=20) || "Le nom doit être compris entre 10 et 25 caractéres"
+            ],
         }
     },
     methods: {
@@ -13,12 +16,9 @@ export default {
             Axios.post('/api/computer/create', {
                 name: this.name,
             })
-            .then(function (response) {
-                console.log(response)
+            .then(({data}) => {
+                this.$emit('addComputer', data.data)
                 this.close()
-            })
-            .catch(function (error) {
-                console.log(error)
             })
         },
         close() {

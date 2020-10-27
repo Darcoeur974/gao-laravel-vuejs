@@ -25,5 +25,8 @@ export default {
                 }
             )
         },
+        add(computer) {
+            this.computers.push(computer)
+        }
     }
 }

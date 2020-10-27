@@ -1939,18 +1939,23 @@ __webpack_require__.r(__webpack_exports__);
       name: '',
       nameRules: [function (v) {
         return !!v || "Nom d'ordinateur requis";
+      }, function (v) {
+        return v && v.length >= 10 && v.length <= 20 || "Le nom doit être compris entre 10 et 25 caractéres";
       }]
     };
   },
   methods: {
     save: function save() {
+      var _this = this;
+
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/computer/create', {
         name: this.name
-      }).then(function (response) {
-        console.log(response);
-        this.close();
-      })["catch"](function (error) {
-        console.log(error);
+      }).then(function (_ref) {
+        var data = _ref.data;
+
+        _this.$emit('addComputer', data.data);
+
+        _this.close();
       });
     },
     close: function close() {
@@ -2000,6 +2005,9 @@ __webpack_require__.r(__webpack_exports__);
           _this.computers.push(_data);
         });
       });
+    },
+    add: function add(computer) {
+      this.computers.push(computer);
     }
   }
 });
@@ -20357,7 +20365,10 @@ var render = function() {
                 { staticClass: "align-center" },
                 [
                   _c("v-text-field", {
-                    attrs: { label: "Nom de l'ordinateur" },
+                    attrs: {
+                      rules: _vm.nameRules,
+                      label: "Nom de l'ordinateur"
+                    },
                     model: {
                       value: _vm.name,
                       callback: function($$v) {
@@ -20450,7 +20461,13 @@ var render = function() {
   return _c(
     "v-main",
     [
-      _c("AddComputer"),
+      _c("AddComputer", {
+        on: {
+          addComputer: function($event) {
+            return _vm.add($event)
+          }
+        }
+      }),
       _vm._v(" "),
       _vm._l(_vm.computers, function(computer, key) {
         return _c(
