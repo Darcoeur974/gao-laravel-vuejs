@@ -1908,9 +1908,22 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     computer: {
+      "default": function _default() {
+        return {};
+      }
+    },
+    date: {
+      "default": function _default() {
+        return {};
+      }
+    },
+    schedule: {
       "default": function _default() {
         return {};
       }
@@ -1918,10 +1931,48 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      dialogAddAssign: false
+      dialogAddAssign: false,
+      search: null,
+      client: {},
+      listingClients: [],
+      loading: false
     };
   },
+  watch: {
+    search: function search(val) {
+      var _this = this;
+
+      if (val && val.length >= 3) {
+        this.loading = true;
+        axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/clients/search', {
+          params: {
+            query: val
+          }
+        }).then(function (_ref) {
+          var data = _ref.data;
+          _this.loading = false;
+          data.forEach(function (data) {
+            _this.listingClients.push(data);
+          });
+        });
+      }
+    }
+  },
   methods: {
+    save: function save() {
+      var _this2 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('api/assign/create', {
+        id_client: this.client.id,
+        id_computer: this.computer.id,
+        date: this.date,
+        schedule: this.schedule.schedule
+      }).then(function (_ref2) {
+        var data = _ref2.data;
+
+        _this2.close();
+      });
+    },
     close: function close() {
       this.dialogAddAssign = false;
     }
@@ -1993,13 +2044,14 @@ __webpack_require__.r(__webpack_exports__);
     initialize: function initialize() {
       var _this = this;
 
-      this.computer.client.forEach(function (_data) {
+      this.computer.assign.forEach(function (_data) {
         _this.assigns.push({
-          schedule: _data.pivot.schedule,
-          lastname: _data.lastname,
-          firstname: _data.firstname
+          schedule: _data.schedule,
+          client: _data.client,
+          clientName: _data.client.lastname + ' ' + _data.client.firstname
         });
       });
+      console.log();
     },
     displaySchedule: function displaySchedule() {
       var _this2 = this;
@@ -20421,7 +20473,7 @@ var render = function() {
                 _vm._g(
                   _vm._b(
                     {
-                      staticClass: "ml-5",
+                      staticClass: "text-center",
                       attrs: { icon: "", color: "orange" }
                     },
                     "v-btn",
@@ -20453,7 +20505,7 @@ var render = function() {
           _c(
             "v-card-title",
             [
-              _vm._v("\n            Assigner un ordinateur\n            "),
+              _vm._v("\n            Ajouter une Assignation\n            "),
               _c("v-spacer"),
               _vm._v(" "),
               _c(
@@ -20468,11 +20520,72 @@ var render = function() {
           _c(
             "v-card-text",
             [
-              _c("v-row", { staticClass: "align-center" }, [
-                _vm._v(
-                  "\n                " + _vm._s(_vm.computer) + "\n            "
-                )
-              ])
+              _c(
+                "v-row",
+                [
+                  _c("v-col", { attrs: { cols: "8" } }, [
+                    _c("strong", { staticClass: "mx-2" }, [
+                      _vm._v("Ordinateur :  " + _vm._s(_vm.computer.name) + " ")
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("v-col", { attrs: { cols: "4 text-right" } }, [
+                    _c("strong", { staticClass: "mx-2" }, [
+                      _vm._v("pour : " + _vm._s(_vm.schedule.schedule) + " h ")
+                    ])
+                  ])
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-row",
+                { staticClass: "align-baseline" },
+                [
+                  _c("v-autocomplete", {
+                    attrs: {
+                      dense: "",
+                      "hide-no-data": "",
+                      "return-object": "",
+                      chips: "",
+                      label: "Recherche de client",
+                      "prepend-icon": "mdi-magnify",
+                      "item-text": "firstname",
+                      "item-value": "id",
+                      items: _vm.listingClients,
+                      "search-input": _vm.search,
+                      loading: _vm.loading
+                    },
+                    on: {
+                      "update:searchInput": function($event) {
+                        _vm.search = $event
+                      },
+                      "update:search-input": function($event) {
+                        _vm.search = $event
+                      }
+                    },
+                    model: {
+                      value: _vm.client,
+                      callback: function($$v) {
+                        _vm.client = $$v
+                      },
+                      expression: "client"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    { attrs: { icon: "", color: "orange" } },
+                    [
+                      _c("v-icon", { on: { click: _vm.save } }, [
+                        _vm._v("mdi-check")
+                      ])
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
             ],
             1
           )
@@ -20640,7 +20753,10 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "v-card",
-    { staticClass: "ma-2 justify-center", attrs: { width: "400px" } },
+    {
+      staticClass: "ma-2 justify-center h-100",
+      attrs: { width: "400px", height: "100%", color: "indigo lighten-4" }
+    },
     [
       _c("v-card-title", [_vm._v(_vm._s(_vm.computer.name))]),
       _vm._v(" "),
@@ -20649,10 +20765,13 @@ var render = function() {
         [
           _c(
             "v-row",
+            { staticClass: "align-baseline" },
             [
-              _c("v-col", { attrs: { cols: "2" } }, [
-                _vm._v("\n                Heure\n            ")
-              ]),
+              _c(
+                "v-col",
+                { staticClass: "text-center", attrs: { cols: "2" } },
+                [_vm._v("\n                Heure\n            ")]
+              ),
               _vm._v(" "),
               _c(
                 "v-col",
@@ -20660,9 +20779,11 @@ var render = function() {
                 [_vm._v("\n                Nom Prènom\n            ")]
               ),
               _vm._v(" "),
-              _c("v-col", { staticClass: "text-right", attrs: { cols: "2" } }, [
-                _vm._v("\n                Action\n            ")
-              ])
+              _c(
+                "v-col",
+                { staticClass: "text-center", attrs: { cols: "2" } },
+                [_vm._v("\n                Action\n            ")]
+              )
             ],
             1
           ),
@@ -20670,36 +20791,62 @@ var render = function() {
           _vm._l(_vm.schedules, function(schedule, key) {
             return _c(
               "v-row",
-              { key: key },
+              {
+                key: key,
+                staticClass: "align-baseline",
+                attrs: { color: "purple lighten-3" }
+              },
               [
-                _c("v-col", { attrs: { cols: "2" } }, [
-                  _vm._v(
-                    "\n                " +
-                      _vm._s(schedule.schedule) +
-                      " h\n            "
-                  )
-                ]),
-                _vm._v(" "),
                 _c(
                   "v-col",
-                  { staticClass: "text-center", attrs: { cols: "8" } },
+                  { staticClass: "text-center", attrs: { cols: "2" } },
                   [
                     _vm._v(
                       "\n                " +
-                        _vm._s(schedule.lastname) +
-                        " " +
-                        _vm._s(schedule.firstname) +
-                        "\n            "
+                        _vm._s(schedule.schedule) +
+                        " h\n            "
                     )
                   ]
                 ),
                 _vm._v(" "),
-                _c(
-                  "v-col",
-                  { staticClass: "text-right", attrs: { cols: "2" } },
-                  [_c("AddAssign", { attrs: { computer: _vm.computer } })],
-                  1
-                )
+                schedule.client
+                  ? _c(
+                      "v-col",
+                      { staticClass: "text-center", attrs: { cols: "8" } },
+                      [
+                        _vm._v(
+                          "\n                " +
+                            _vm._s(schedule.clientName) +
+                            "\n            "
+                        )
+                      ]
+                    )
+                  : _c(
+                      "v-col",
+                      { staticClass: "text-center", attrs: { cols: "8" } },
+                      [_vm._v("\n                ---\n            ")]
+                    ),
+                _vm._v(" "),
+                schedule.client
+                  ? _c(
+                      "v-col",
+                      { staticClass: "text-center", attrs: { cols: "2" } },
+                      [_vm._v("\n                ---\n            ")]
+                    )
+                  : _c(
+                      "v-col",
+                      { staticClass: "text-center", attrs: { cols: "2" } },
+                      [
+                        _c("AddAssign", {
+                          attrs: {
+                            computer: _vm.computer,
+                            date: _vm.date,
+                            schedule: schedule
+                          }
+                        })
+                      ],
+                      1
+                    )
               ],
               1
             )
@@ -20847,7 +20994,7 @@ var render = function() {
         _vm._l(_vm.computers, function(computer, key) {
           return _c(
             "div",
-            { key: key },
+            { key: key, staticClass: "ma-2" },
             [_c("Computer", { attrs: { computer: computer, date: _vm.date } })],
             1
           )

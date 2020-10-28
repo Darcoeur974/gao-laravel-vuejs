@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Resources\ComputerResource;
 use App\Models\ComputerModel;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 
 class ComputerController extends Controller
 {
@@ -15,12 +14,9 @@ class ComputerController extends Controller
             'date' => 'required|string',
         ]);
 
-        $computers = ComputerModel::leftjoin('assigns', 'computers.id', '=', 'id_computer')
-            ->with('client', function ($query) use ($validatedData) {
-                $query->wherePivot('date', $validatedData['date']);
-            })
-            ->orderBy('computers.id', 'asc')
-            ->get();
+        $computers = ComputerModel::with(['assign' => function ($query) use ($validatedData) {
+            $query->where('date', $validatedData['date'])->with(['client']);
+        }])->orderBy('computers.id', 'asc')->get();
 
         return ComputerResource::collection($computers);
     }

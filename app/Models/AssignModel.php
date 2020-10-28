@@ -17,19 +17,8 @@ class AssignModel extends Model
 
     public function client()
     {
-        return $this->belongsToMany(
+        return $this->belongsTo(
             ClientModel::class,
-            'assigns',
-            'id_client',
-            'id_computer'
-        );
-    }
-    public function computer()
-    {
-        return $this->belongsToMany(
-            ComputerModel::class,
-            'assigns',
-            'id_computer',
             'id_client'
         );
     }

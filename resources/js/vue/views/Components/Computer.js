@@ -14,7 +14,7 @@ export default {
         }
     },
     components: {
-        AddAssign,
+        AddAssign
     },
     data() {
         return {
@@ -40,14 +40,15 @@ export default {
     },
     methods: {
         initialize() {
-            this.computer.client.forEach(_data => {
+            this.computer.assign.forEach(_data => {
                 this.assigns.push({
-                        schedule: _data.pivot.schedule,
-                        lastname: _data.lastname,
-                        firstname: _data.firstname,
+                        schedule: _data.schedule,
+                        client: _data.client,
+                        clientName: _data.client.lastname + ' ' + _data.client.firstname,
                     });
                 }
             )
+            console.log()
         },
         displaySchedule() {
             this.assigns.forEach(_assign => {

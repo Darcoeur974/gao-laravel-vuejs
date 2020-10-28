@@ -15,10 +15,11 @@ class ComputerResource extends JsonResource
      */
     public function toArray($request)
     {
+        $assign = AssignResource::collection($this->assign);
         return [
             'id'=>$this->id,
             'name'=>$this->name,
-            'client' => $this->client,
+            'assign' => $assign,
         ];
     }
 }

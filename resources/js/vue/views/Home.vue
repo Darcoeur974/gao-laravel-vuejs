@@ -32,8 +32,8 @@
             </v-col>
         </v-row>
         <v-row class="justify-center">
-            <div v-for="(computer, key) in computers" :key="key">
-                <Computer :computer="computer" :date="date" />
+            <div v-for="(computer, key) in computers" :key="key" class="ma-2">
+                <Computer :computer="computer" :date="date"/>
             </div>
         </v-row>
     </v-main>

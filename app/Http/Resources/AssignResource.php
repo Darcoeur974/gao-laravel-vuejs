@@ -10,17 +10,16 @@ class AssignResource extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @param Request $request
      * @return array
      */
-    public function toArray(Request $request)
+    public function toArray($request)
     {
+        $client = new ClientResource($this->client);
         return [
             'id'=>$this->id,
-            'id_client'=>$this->client,
-            'id_computer'=>$this->computer,
             'schedule'=>$this->schedule,
             'date'=>$this->date,
+            'client' => $client
         ];
     }
 }

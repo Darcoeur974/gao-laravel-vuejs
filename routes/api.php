@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AssignController;
+use App\Http\Controllers\ClientController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ComputerController;
@@ -21,10 +23,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::prefix('/computer')->group(function () {
     Route::post('/create', [ComputerController::class, 'create']);
-    Route::post('/', [ComputerController::class, 'getAll']);
     Route::get('/', [ComputerController::class, 'getAll']);
 });
 
 Route::prefix('/clients')->group(function () {
     Route::get('/search', [ClientController::class, 'search']);
+});
+
+Route::prefix('/assign')->group(function () {
+    Route::post('/create', [AssignController::class, 'create']);
 });
