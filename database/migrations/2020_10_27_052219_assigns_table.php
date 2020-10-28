@@ -15,8 +15,10 @@ class AssignsTable extends Migration
     {
         Schema::create('assigns', function (Blueprint $table) {
             $table->id();
-            $table->string('id_client');
-            $table->string('id_computer');
+            $table->bigInteger('id_client')->unsigned();
+            $table->bigInteger('id_computer')->unsigned();
+            $table->foreign('id_client')->references('id')->on('clients');
+            $table->foreign('id_computer')->references('id')->on('computers');
             $table->integer('schedule');
         });
     }

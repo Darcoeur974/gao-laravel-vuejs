@@ -20,31 +20,31 @@ class AssignSeeder extends Seeder
                 'id_client' => 1,
                 'id_computer' => 5,
                 'schedule' => 8,
-                'date' => now()
+                'date' => '2020-10-27'
             ],
             [
                 'id_client' => 2,
                 'id_computer' => 3,
                 'schedule' => 10,
-                'date' => now()
+                'date' => '2020-10-27'
             ],
             [
                 'id_client' => 3,
                 'id_computer' => 1,
                 'schedule' => 9,
-                'date' => now()
+                'date' => '2020-10-27'
             ],
             [
                 'id_client' => 4,
                 'id_computer' => 2,
                 'schedule' => 13,
-                'date' => now()
+                'date' => '2020-10-28'
             ],
             [
                 'id_client' => 5,
                 'id_computer' => 4,
                 'schedule' => 16,
-                'date' => now()
+                'date' => '2020-10-28'
             ],
         ]);
     }

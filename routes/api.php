@@ -18,7 +18,13 @@ use App\Http\Controllers\ComputerController;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
 Route::prefix('/computer')->group(function () {
-    Route::post('/create', [ComputerController::class, 'create'])->middleware('throttle:240,1');
+    Route::post('/create', [ComputerController::class, 'create']);
+    Route::post('/', [ComputerController::class, 'getAll']);
     Route::get('/', [ComputerController::class, 'getAll']);
+});
+
+Route::prefix('/clients')->group(function () {
+    Route::get('/search', [ClientController::class, 'search']);
 });

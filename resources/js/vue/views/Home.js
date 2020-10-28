@@ -10,6 +10,8 @@ export default {
     data() {
         return {
             computers: [],
+            date: new Date().toISOString().substr(0, 10),
+            menuDate: false,
         };
     },
     created() {
@@ -17,7 +19,12 @@ export default {
     },
     methods: {
         getComputers() {
-            Axios.get('/api/computer').then(
+            this.computers = []
+            Axios.get('/api/computer', {
+                params: {
+                    date : this.date
+                }
+            }).then(
                 ({ data }) => {
                     data.data.forEach(_data => {
                         this.computers.push(_data)

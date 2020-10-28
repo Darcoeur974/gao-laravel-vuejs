@@ -3,7 +3,7 @@ import Axios from "axios";
 export default {
     data() {
         return {
-            dialog: false,
+            dialogAddComputer: false,
             name: '',
             nameRules: [
                 v => !!v || "Nom d'ordinateur requis",
@@ -22,7 +22,7 @@ export default {
             })
         },
         close() {
-            this.dialog = false
+            this.dialogAddComputer = false
         }
     }
 }

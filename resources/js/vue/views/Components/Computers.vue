@@ -18,9 +18,10 @@
                     {{ schedule.schedule }} h
                 </v-col>
                 <v-col cols="8" class="text-center">
-                    {{ schedule.firstname }}
+                    {{ schedule.lastname }} {{ schedule.firstname }}
                 </v-col>
                 <v-col cols="2" class="text-right">
+                    <AddAssign :computer="computer" />
                 </v-col>
             </v-row>
         </v-card-text>

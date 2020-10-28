@@ -1,5 +1,5 @@
 <template>
-    <v-dialog v-model="dialog" width="450px">
+    <v-dialog v-model="dialogAddComputer" width="450px">
         <template v-slot:activator="{ on, attrs }">
             <v-btn icon color="orange" v-bind="attrs" v-on="on" class="ml-5">
                 <v-icon>mdi-card-plus</v-icon>

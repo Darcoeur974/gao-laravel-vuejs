@@ -1,4 +1,4 @@
-import Axios from "axios";
+import AddAssign from "./Assign/AddAssign.vue";
 
 export default {
     props: {
@@ -6,7 +6,15 @@ export default {
             default: function () {
                 return {}
             },
+        },
+        date: {
+            default: function () {
+                return {}
+            },
         }
+    },
+    components: {
+        AddAssign,
     },
     data() {
         return {
@@ -35,6 +43,7 @@ export default {
             this.computer.client.forEach(_data => {
                 this.assigns.push({
                         schedule: _data.pivot.schedule,
+                        lastname: _data.lastname,
                         firstname: _data.firstname,
                     });
                 }
@@ -48,6 +57,6 @@ export default {
                     }
                 }
             })
-        }
+        },
     }
 }

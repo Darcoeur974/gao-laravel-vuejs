@@ -19,6 +19,6 @@ class ComputerModel extends Model
             'assigns',
             'id_client',
             'id_computer'
-        )->withPivot('schedule');
+        )->withPivot('schedule', 'date');
     }
 }

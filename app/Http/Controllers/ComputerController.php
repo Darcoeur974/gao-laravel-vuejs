@@ -9,9 +9,18 @@ use Illuminate\Support\Facades\Log;
 
 class ComputerController extends Controller
 {
-    public function getAll()
+    public function getAll(Request $request)
     {
-        $computers = ComputerModel::all();
+        $validatedData = $request->validate([
+            'date' => 'required|string',
+        ]);
+
+        $computers = ComputerModel::leftjoin('assigns', 'computers.id', '=', 'id_computer')
+            ->with('client', function ($query) use ($validatedData) {
+                $query->wherePivot('date', $validatedData['date']);
+            })
+            ->orderBy('computers.id', 'asc')
+            ->get();
 
         return ComputerResource::collection($computers);
     }
